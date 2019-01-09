@@ -12,22 +12,7 @@ class TodoItem extends StatelessWidget {
       key: PageStorageKey<Todo>(_todo),
       title: Text(_todo.getTitle(), style: TextStyle(fontSize: 20)),
       children: <Widget>[
-        Align(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.fromLTRB(20.0, 0, 0, 10.0),
-                    child: Text(
-                      'Title',
-                      style: TextStyle(fontSize: 16),
-                    )),
-                Container(
-                    child: TextField(
-                  controller: TextEditingController(text: _todo.getTitle()),
-                ))
-              ],
-            ))
+        ListTile(title: Text('ABC'),)
       ],
     );
   }
