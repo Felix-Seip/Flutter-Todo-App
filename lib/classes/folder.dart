@@ -2,12 +2,17 @@ import 'todo.dart';
 
 class Folder {
   String _title;
+  String _imagePath;
   List<Todo> _todos;
 
-  Folder(this._title, this._todos);
+  Folder(this._title, this._todos, this._imagePath);
 
   String getTitle(){
     return _title;
+  }
+
+  String getImagePath(){
+    return _imagePath;
   }
 
   Todo getTodo(int index){

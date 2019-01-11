@@ -8,10 +8,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primaryColor: Color.fromARGB(255, 34, 116, 165)),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('To-Do App'),
-        ),
         body: HomeScreen(),
       ),
     );
