@@ -26,6 +26,12 @@ class FolderScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('${getFolderTitle()} List'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[

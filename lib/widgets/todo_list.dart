@@ -7,7 +7,7 @@ class TodoList extends StatelessWidget {
   final Alignment _alignment;
 
   const TodoList(this._todos, this._alignment);
-
+  
   @override
   Widget build(BuildContext context) {
     return Expanded(
