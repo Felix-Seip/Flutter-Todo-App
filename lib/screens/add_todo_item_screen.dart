@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../classes/todo.dart';
+import '../classes/folder.dart';
 
 class AddTodoItemScreen extends StatefulWidget {
+  final Folder _parentFolder;
+
+  AddTodoItemScreen(this._parentFolder);
+
   @override
   State<StatefulWidget> createState() {
     return _AddTodoItemScreenState();
@@ -51,7 +56,7 @@ class _AddTodoItemScreenState extends State<AddTodoItemScreen> {
             icon: Icon(Icons.check),
             onPressed: () {
               Navigator.pop(
-                  context, Todo(_title, _completionDate, _additionalNotes));
+                  context, Todo(_title, _completionDate, _additionalNotes, widget._parentFolder));
             },
           )
         ],

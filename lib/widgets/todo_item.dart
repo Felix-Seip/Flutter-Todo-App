@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../classes/todo.dart';
+import '../classes/enums.dart';
 
 class TodoItem extends StatefulWidget {
   final Todo _todo;
+  final Function _handleTodoItemButtons;
 
-  TodoItem(this._todo);
+  TodoItem(this._todo, this._handleTodoItemButtons);
 
   @override
   State<StatefulWidget> createState() {
@@ -37,6 +39,7 @@ class _TodoItemState extends State<TodoItem> {
   @override
   Widget build(BuildContext context) {
     DateFormat formatter = new DateFormat.yMMMMd('en_US');
+    print(widget._todo.getStatus());
     return ExpansionTile(
       key: PageStorageKey<Todo>(widget._todo),
       title: Text(widget._todo.getTitle(), style: TextStyle(fontSize: 20)),
@@ -59,6 +62,52 @@ class _TodoItemState extends State<TodoItem> {
           ),
           leading: Icon(Icons.edit),
           onTap: () {},
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              widget._todo.getStatus() == TodoStatus.Uncomplete
+                  ? FlatButton(
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.check,
+                            color: Colors.blue,
+                          ),
+                          Text(
+                            'Mark as completed',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        widget._handleTodoItemButtons(
+                            widget._todo, TodoActions.MarkCompleted);
+                      },
+                    )
+                  : Container(),
+              FlatButton(
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    Text(
+                      'Remove',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ],
+                ),
+                onPressed: () {
+                  widget._handleTodoItemButtons(
+                      widget._todo, TodoActions.Delete);
+                },
+              ),
+            ],
+          ),
         )
       ],
     );

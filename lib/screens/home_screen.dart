@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../classes/folder.dart';
 import '../classes/todo.dart';
+import '../classes/enums.dart';
 
-
-import '../widgets/todo_list.dart';
+import '../widgets/lists/todo_list.dart';
+import '../widgets/lists/folder_list.dart';
 import '../widgets/folder_item.dart';
 import '../widgets/list_header.dart';
-import '../widgets/folder_list.dart';
 
 import '../screens/add_folder_screen.dart';
 
@@ -19,40 +19,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
+    //Dummy data only
+    for (int i = 0; i < _items.length; i++) {
+      _items[i].getFolder().addTodo(Todo('Todo $i', DateTime.now(),
+          'This is an example todo', _items[i].getFolder()));
+    }
+
     super.initState();
   }
 
   List<FolderItem> _items = <FolderItem>[
-    FolderItem(Folder(
-        'Folder 1',
-        <Todo>[Todo('Todo 1', DateTime.now(), 'This is an example todo')],
-        "assets/wallpaper.jpg")),
-    FolderItem(Folder(
-        'Folder 2',
-        <Todo>[Todo('Todo 2', DateTime.now(), 'This is another example todo')],
-        "assets/wallpaper.jpg")),
-    FolderItem(Folder(
-        'Folder 3',
-        <Todo>[Todo('Todo 3', DateTime.now(), 'This is another example todo')],
-        "assets/wallpaper.jpg")),
-    FolderItem(Folder(
-        'Folder 4',
-        <Todo>[Todo('Todo 4', DateTime.now(), 'This is another example todo')],
-        "assets/wallpaper.jpg")),
+    FolderItem(Folder('Folder 1', <Todo>[], "assets/wallpaper.jpg")),
+    FolderItem(Folder('Folder 2', <Todo>[], "assets/wallpaper.jpg")),
+    FolderItem(Folder('Folder 3', <Todo>[], "assets/wallpaper.jpg")),
+    FolderItem(Folder('Folder 4', <Todo>[], "assets/wallpaper.jpg")),
   ];
 
   List<Widget> _appBarActions = <Widget>[];
 
-  List<Todo> _getAllTodos() {
+  List<Todo> _getAllUpcomingTodos({int distanceBetweenDates = 7}) {
     List<Todo> todos = <Todo>[];
     for (int i = 0; i < _items.length; i++) {
       if (_items[i].getFolder().getAllTodos().length == 0) {
         continue;
       }
-      todos.addAll(_items[i].getFolder().getAllTodos());
+
+      for (int j = 0; j < _items[i].getFolder().getAllTodos().length; j++) {
+        if (_items[i]
+                .getFolder()
+                .getAllTodos()[j]
+                .getCompletionTime()
+                .difference(DateTime.now()) <
+            Duration(days: distanceBetweenDates)) {
+          todos.add(_items[i].getFolder().getAllTodos()[j]);
+        }
+      }
     }
     return todos;
   }
@@ -67,6 +70,49 @@ class _HomeScreenState extends State<HomeScreen> {
         _items.add(FolderItem(folder));
       });
     }
+  }
+
+  void _handleTodoItemButtons(Todo todo, TodoActions todoAction) {
+    String snackBarMessage = '';
+
+    setState(() {
+      switch (todoAction) {
+        case TodoActions.MarkCompleted:
+          todo.setTodoStatus(TodoStatus.Complete);
+          snackBarMessage = 'Marked to-do ${todo.getTitle()} as completed';
+          break;
+        case TodoActions.Delete:
+          todo.getParentFolder().deleteTodo(todo);
+          snackBarMessage = 'Deleted to-do ${todo.getTitle()}';
+          break;
+      }
+    });
+
+    _showSnackBar(todo, snackBarMessage, todoAction);
+  }
+
+  void _showSnackBar(Todo todo, String message, TodoActions todoAction) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () {
+          setState(() {
+            switch (todoAction) {
+              case TodoActions.MarkCompleted:
+                todo.setTodoStatus(TodoStatus.Uncomplete);
+                break;
+              case TodoActions.Delete:
+                todo.getParentFolder().addTodo(todo);
+                break;
+            }
+          });
+        },
+      ),
+    );
+
+    // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -99,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
               FolderList(_items),
               ListHeader(
                   'Upcoming To-Dos', EdgeInsets.fromLTRB(30.0, 10.0, 20.0, 0)),
-              TodoList(_getAllTodos(), Alignment.center)
+              TodoList(_getAllUpcomingTodos(distanceBetweenDates: 7), Alignment.center, _handleTodoItemButtons)
             ],
           ),
         ),
