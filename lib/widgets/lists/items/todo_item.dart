@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
-import '../classes/todo.dart';
-import '../classes/enums.dart';
+import '../../../classes/todo.dart';
+import '../../../classes/enums.dart';
 
 class TodoItem extends StatefulWidget {
   final Todo _todo;

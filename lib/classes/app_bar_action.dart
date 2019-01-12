@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum Action {
-  Add,
-  Edit
-}
+import 'enums.dart';
 
 class AppBarAction {
   const AppBarAction({this.title, this.icon, this.action});

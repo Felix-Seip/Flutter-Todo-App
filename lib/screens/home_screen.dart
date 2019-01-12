@@ -6,8 +6,8 @@ import '../classes/enums.dart';
 
 import '../widgets/lists/todo_list.dart';
 import '../widgets/lists/folder_list.dart';
-import '../widgets/folder_item.dart';
 import '../widgets/list_header.dart';
+import '../widgets/lists/items/folder_item.dart';
 
 import '../screens/add_folder_screen.dart';
 

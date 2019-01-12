@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../widgets/folder_item.dart';
+
+import './items/folder_item.dart';
+
 import '../../screens/folder_screen.dart';
 
 class FolderList extends StatefulWidget {

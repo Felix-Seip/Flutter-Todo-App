@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../classes/folder.dart';
+import '../../../classes/folder.dart';
 
 class FolderItem extends StatelessWidget {
   const FolderItem(this._folder);
