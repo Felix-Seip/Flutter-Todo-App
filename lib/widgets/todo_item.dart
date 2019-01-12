@@ -28,7 +28,9 @@ class _TodoItemState extends State<TodoItem> {
       initialDate: widget._todo.getCompletionTime(),
     );
     setState(() {
-      widget._todo.setCompletionTime(selectedDate);
+      if (selectedDate != null) {
+        widget._todo.setCompletionTime(selectedDate);
+      }
     });
   }
 

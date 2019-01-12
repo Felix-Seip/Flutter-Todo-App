@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 import '../classes/folder.dart';
 import '../classes/todo.dart';
@@ -20,12 +19,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Random random;
 
   @override
   void initState() {
     super.initState();
-    random = Random();
   }
 
   List<FolderItem> _items = <FolderItem>[

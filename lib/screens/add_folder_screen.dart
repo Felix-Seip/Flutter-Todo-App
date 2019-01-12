@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import '../classes/folder.dart';
 import '../classes/todo.dart';
 
-class AddFolderScreen extends StatelessWidget {
+class AddFolderScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _AddFolderScreenState();
+  }
+}
+
+class _AddFolderScreenState extends State<AddFolderScreen> {
   String _folderTitle;
 
   @override
@@ -21,7 +28,8 @@ class AddFolderScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check),
             onPressed: () {
-              Navigator.pop(context, Folder(_folderTitle, <Todo>[], "assets/wallpaper.jpg"));
+              Navigator.pop(context,
+                  Folder(_folderTitle, <Todo>[], "assets/wallpaper.jpg"));
             },
           )
         ],
@@ -35,7 +43,11 @@ class AddFolderScreen extends StatelessWidget {
                 labelText: "To-Do list name",
               ),
               onChanged: (text) {
-                _folderTitle = text;
+                setState(
+                  () {
+                    _folderTitle = text;
+                  },
+                );
               },
             )
           ],
