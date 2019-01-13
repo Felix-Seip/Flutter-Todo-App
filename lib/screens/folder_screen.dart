@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/todo_item.dart';
+import '../widgets/lists/items/todo_item.dart';
 
 import '../screens/add_todo_item_screen.dart';
 
